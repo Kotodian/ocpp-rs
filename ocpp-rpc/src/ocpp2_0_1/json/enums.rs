@@ -60,285 +60,413 @@ pub enum MessageType {
 
 use crate::feature;
 
-feature!(AuthorizeFeature, AuthorizeRequest, AuthorizeResponse);
 feature!(
+    Authorize,
+    AuthorizeFeature,
+    AuthorizeRequest,
+    AuthorizeResponse
+);
+
+feature!(
+    BootNotification,
     BootNotificationFeature,
     BootNotificationRequest,
     BootNotificationResponse
 );
+
 feature!(
+    CancelReservation,
     CancelReservationFeature,
     CancelReservationRequest,
     CancelReservationResponse
 );
+
 feature!(
+    CertificateSigned,
     CertificateSignedFeature,
     CertificateSignedRequest,
     CertificateSignedResponse
 );
+
 feature!(
+    ChangeAvailability,
     ChangeAvailabilityFeature,
     ChangeAvailabilityRequest,
     ChangeAvailabilityResponse
 );
-feature!(ClearCacheFeature, ClearCacheRequest, ClearCacheResponse);
+
 feature!(
+    ClearCache,
+    ClearCacheFeature,
+    ClearCacheRequest,
+    ClearCacheResponse
+);
+
+feature!(
+    ClearChargingProfile,
     ClearChargingProfileFeature,
     ClearChargingProfileRequest,
     ClearChargingProfileResponse
 );
+
 feature!(
+    ClearDisplayMessage,
     ClearDisplayMessageFeature,
     ClearDisplayMessageRequest,
     ClearDisplayMessageResponse
 );
+
 feature!(
+    ClearedChargingLimit,
     ClearedChargingLimitFeature,
     ClearedChargingLimitRequest,
     ClearedChargingLimitResponse
 );
+
 feature!(
+    ClearVariableMonitoring,
     ClearVariableMonitoringFeature,
     ClearVariableMonitoringRequest,
     ClearVariableMonitoringResponse
 );
-feature!(CostUpdatedFeature, CostUpdatedRequest, CostUpdatedResponse);
 feature!(
+    CostUpdated,
+    CostUpdatedFeature,
+    CostUpdatedRequest,
+    CostUpdatedResponse
+);
+feature!(
+    CustomerInformation,
     CustomerInformationFeature,
     CustomerInformationRequest,
     CustomerInformationResponse
 );
+
 feature!(
+    DataTransfer,
     DataTransferFeature,
     DataTransferRequest,
     DataTransferResponse
 );
+
 feature!(
+    DeleteCertificate,
     DeleteCertificateFeature,
     DeleteCertificateRequest,
     DeleteCertificateResponse
 );
 feature!(
+    FirmwareStatusNotification,
     FirmwareStatusNotificationFeature,
     FirmwareStatusNotificationRequest,
     FirmwareStatusNotificationResponse
 );
+
 feature!(
+    Get15118EVCertificate,
     Get15118EVCertificateFeature,
     Get15118EVCertificateRequest,
     Get15118EVCertificateResponse
 );
+
 feature!(
+    GetBaseReport,
     GetBaseReportFeature,
     GetBaseReportRequest,
     GetBaseReportResponse
 );
+
 feature!(
+    GetCertificateStatus,
     GetCertificateStatusFeature,
     GetCertificateStatusRequest,
     GetCertificateStatusResponse
 );
 feature!(
+    GetChargingProfiles,
     GetChargingProfilesFeature,
     GetChargingProfilesRequest,
     GetChargingProfilesResponse
 );
 feature!(
+    GetCompositeSchedule,
     GetCompositeScheduleFeature,
     GetCompositeScheduleRequest,
     GetCompositeScheduleResponse
 );
 feature!(
+    GetDisplayMessage,
     GetDisplayMessagesFeature,
     GetDisplayMessagesRequest,
     GetDisplayMessagesResponse
 );
 feature!(
+    GetInstalledCertificateIds,
     GetInstalledCertificateIdsFeature,
     GetInstalledCertificateIdsRequest,
     GetInstalledCertificateIdsResponse
 );
-feature!(GetLogFeature, GetLogRequest, GetLogResponse);
+feature!(GetLog, GetLogFeature, GetLogRequest, GetLogResponse);
+
 feature!(
+    GetLocalListVersion,
     GetLocalListVersionFeature,
     GetLocalListVersionRequest,
     GetLocalListVersionResponse
 );
 feature!(
+    GetMonitoringReport,
     GetMonitoringReportFeature,
     GetMonitoringReportRequest,
     GetMonitoringReportResponse
 );
-feature!(GetReportFeature, GetReportRequest, GetReportResponse);
 feature!(
+    GetReport,
+    GetReportFeature,
+    GetReportRequest,
+    GetReportResponse
+);
+feature!(
+    GetTransactionStatus,
     GetTransactionStatusFeature,
     GetTransactionStatusRequest,
     GetTransactionStatusResponse
 );
 feature!(
+    GetVariables,
     GetVariablesFeature,
     GetVariablesRequest,
     GetVariablesResponse
 );
 
-feature!(HeartbeatFeature, HeartbeatRequest, HeartbeatResponse);
 feature!(
+    Heartbeat,
+    HeartbeatFeature,
+    HeartbeatRequest,
+    HeartbeatResponse
+);
+
+feature!(
+    InstallCertificate,
     InstallCertificateFeature,
     InstallCertificateRequest,
     InstallCertificateResponse
 );
 feature!(
+    LogStatusNotification,
     LogStatusNotificationFeature,
     LogStatusNotificationRequest,
     LogStatusNotificationResponse
 );
-feature!(MeterValuesFeature, MeterValuesRequest, MeterValuesResponse);
 feature!(
+    MeterValues,
+    MeterValuesFeature,
+    MeterValuesRequest,
+    MeterValuesResponse
+);
+
+feature!(
+    NotifyChargingLimit,
     NotifyChargingLimitFeature,
     NotifyChargingLimitRequest,
     NotifyChargingLimitResponse
 );
+
 feature!(
+    NotifyCustomerInformation,
     NotifyCustomerInformationFeature,
     NotifyCustomerInformationRequest,
     NotifyCustomerInformationResponse
 );
+
 feature!(
+    NotifyDisplayMessages,
     NotifyDisplayMessagesFeature,
     NotifyDisplayMessagesRequest,
     NotifyDisplayMessagesResponse
 );
 
 feature!(
+    NotifyEVChargingNeeds,
     NotifyEVChargingNeedsFeature,
     NotifyEVChargingNeedsRequest,
     NotifyEVChargingNeedsResponse
 );
 feature!(
+    NotifyEVChargingSchedule,
     NotifyEVChargingScheduleFeature,
     NotifyEVChargingScheduleRequest,
     NotifyEVChargingScheduleResponse
 );
-feature!(NotifyEventFeature, NotifyEventRequest, NotifyEventResponse);
+
 feature!(
+    NotifyEvent,
+    NotifyEventFeature,
+    NotifyEventRequest,
+    NotifyEventResponse
+);
+
+feature!(
+    NotifyMonitoringReport,
     NotifyMonitoringReportFeature,
     NotifyMonitoringReportRequest,
     NotifyMonitoringReportResponse
 );
+
 feature!(
+    NotifyReport,
     NotifyReportFeature,
     NotifyReportRequest,
     NotifyReportResponse
 );
 
 feature!(
+    PublishFirmware,
     PublishFirmwareFeature,
     PublishFirmwareRequest,
     PublishFirmwareResponse
 );
+
 feature!(
+    PublishFirmwareStatusNotification,
     PublishFirmwareStatusNotificationFeature,
     PublishFirmwareStatusNotificationRequest,
     PublishFirmwareStatusNotificationResponse
 );
+
 feature!(
+    ReportChargingProfiles,
     ReportChargingProfilesFeature,
     ReportChargingProfilesRequest,
     ReportChargingProfilesResponse
 );
+
 feature!(
+    RequestStartTransaction,
     RequestStartTransactionFeature,
     RequestStartTransactionRequest,
     RequestStartTransactionResponse
 );
+
 feature!(
+    RequestStopTransaction,
     RequestStopTransactionFeature,
     RequestStopTransactionRequest,
     RequestStopTransactionResponse
 );
+
 feature!(
+    ReservationStatusUpdate,
     ReservationStatusUpdateFeature,
     ReservationStatusUpdateRequest,
     ReservationStatusUpdateResponse
 );
-feature!(ReserveNowFeature, ReserveNowRequest, ReserveNowResponse);
-feature!(ResetFeature, ResetRequest, ResetResponse);
+
 feature!(
+    ReserveNow,
+    ReserveNowFeature,
+    ReserveNowRequest,
+    ReserveNowResponse
+);
+
+feature!(Reset, ResetFeature, ResetRequest, ResetResponse);
+
+feature!(
+    SecurityEventNotification,
     SecurityEventNotificationFeature,
     SecurityEventNotificationRequest,
     SecurityEventNotificationResponse
 );
+
 feature!(
+    SendLocalList,
     SendLocalListFeature,
     SendLocalListRequest,
     SendLocalListResponse
 );
+
 feature!(
+    SetChargingProfile,
     SetChargingProfileFeature,
     SetChargingProfileRequest,
     SetChargingProfileResponse
 );
+
 feature!(
+    SetDisplayMessage,
     SetDisplayMessageFeature,
     SetDisplayMessageRequest,
     SetDisplayMessageResponse
 );
 feature!(
+    SetMonitoringBase,
     SetMonitoringBaseFeature,
     SetMonitoringBaseRequest,
     SetMonitoringBaseResponse
 );
+
 feature!(
+    SetMonitoringLevel,
     SetMonitoringLevelFeature,
     SetMonitoringLevelRequest,
     SetMonitoringLevelResponse
 );
 feature!(
+    SetNetworkProfile,
     SetNetworkProfileFeature,
     SetNetworkProfileRequest,
     SetNetworkProfileResponse
 );
 feature!(
+    SetVariableMonitoring,
     SetVariableMonitoringFeature,
     SetVariableMonitoringRequest,
     SetVariableMonitoringResponse
 );
 feature!(
+    SetVariables,
     SetVariablesFeature,
     SetVariablesRequest,
     SetVariablesResponse
 );
 feature!(
+    SignCertificate,
     SignCertificateFeature,
     SignCertificateRequest,
     SignCertificateResponse
 );
 feature!(
+    StatusNotification,
     StatusNotificationFeature,
     StatusNotificationRequest,
     StatusNotificationResponse
 );
 feature!(
+    TransactionEvent,
     TransactionEventFeature,
     TransactionEventRequest,
     TransactionEventResponse
 );
 feature!(
+    TriggerMessage,
     TriggerMessageFeature,
     TriggerMessageRequest,
     TriggerMessageResponse
 );
 feature!(
+    UnlockConnector,
     UnlockConnectorFeature,
     UnlockConnectorRequest,
     UnlockConnectorResponse
 );
 feature!(
+    UnpublishFirmware,
     UnpublishFirmwareFeature,
     UnpublishFirmwareRequest,
     UnpublishFirmwareResponse
 );
 feature!(
+    UpdateFirmware,
     UpdateFirmwareFeature,
     UpdateFirmwareRequest,
     UpdateFirmwareResponse
@@ -514,7 +642,7 @@ pub enum Payload {
     Get15118EVCertificate(Get15118EVCertificateFeature),
     GetBaseReport(GetBaseReportFeature),
     GetCertificateStatus(GetCertificateStatusFeature),
-    GetChargingProfile(GetChargingProfilesFeature),
+    GetChargingProfiles(GetChargingProfilesFeature),
     GetCompositeSchedule(GetCompositeScheduleFeature),
     GetDisplayMessage(GetDisplayMessagesFeature),
     GetInstalledCertificateIds(GetInstalledCertificateIdsFeature),

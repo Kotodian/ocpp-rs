@@ -18,6 +18,17 @@ pub struct Call {
     pub payload: Payload,
 }
 
+impl Call {
+    pub fn new(message_id: MessageId, action: Action, payload: Payload) -> Self {
+        Call {
+            message_type_id: 2,
+            message_id,
+            action,
+            payload,
+        }
+    }
+}
+
 impl TryFrom<MessageType> for Call {
     type Error = &'static str;
 
@@ -75,12 +86,11 @@ impl TryFrom<MessageType> for CallResult {
     fn try_from(msg: MessageType) -> Result<Self, Self::Error> {
         match msg {
             MessageType::CallResult(message_type_id, message_id, payload) => {
-                let payload: Payload =
-                    if let Ok(p) = serde_json::from_value::<Payload>(payload) {
-                        p
-                    } else {
-                        return Err("failed");
-                    };
+                let payload: Payload = if let Ok(p) = serde_json::from_value::<Payload>(payload) {
+                    p
+                } else {
+                    return Err("failed");
+                };
                 Ok(CallResult {
                     message_type_id,
                     message_id,
