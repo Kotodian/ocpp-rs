@@ -21,5 +21,33 @@ macro_rules! feature {
                 Payload::$action($name::Response(self))
             }
         }
+
+        impl TryFrom<Payload> for $request {
+            type Error = &'static str;
+
+            fn try_from(value: Payload) -> Result<Self, Self::Error> {
+                match value {
+                    Payload::$action(feature) => match feature {
+                        $name::Request(request) => Ok(request),
+                        _ => Err("unexpected"),
+                    },
+                    _ => Err("unexpected"),
+                }
+            }
+        }
+
+        impl TryFrom<Payload> for $response {
+            type Error = &'static str;
+
+            fn try_from(value: Payload) -> Result<Self, Self::Error> {
+                match value {
+                    Payload::$action(feature) => match feature {
+                        $name::Response(response) => Ok(response),
+                        _ => Err("unexpected"),
+                    },
+                    _ => Err("unexpected"),
+                }
+            }
+        }
     };
 }

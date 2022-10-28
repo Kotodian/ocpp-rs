@@ -15,8 +15,8 @@ uuid = { version = "1", features = ["v4", "fast-rng", "macro-diagnostics"] }
 serde = { version = "1", features = ["derive"] }
 chrono = "0.4"
 clap = { version = "3.1.18", features = ["derive"] }
-lazy_static = "1.4.0"
 mio-extras = "2.0"
+once_cell = "1.10.0"
 
 [dependencies.ws]
 version = "0.9.0"

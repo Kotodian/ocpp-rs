@@ -1,6 +1,6 @@
 use std::sync::Mutex;
 
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 
 // Connector struct.
 #[derive(Clone, Debug)]
@@ -9,12 +9,12 @@ pub struct Connector {
     pub operational: bool,
 }
 
-lazy_static! {
-    static ref EVSES: Mutex<[[Connector; 1]; 1]> = Mutex::new([[Connector {
+static EVSES: Lazy<Mutex<[[Connector; 1]; 1]>> = Lazy::new(|| {
+    Mutex::new([[Connector {
         status: "Inoperative",
-        operational: true
-    }]]);
-}
+        operational: true,
+    }]])
+});
 // Array of EVSE each item of which contains an array of connectors.
 
 pub fn set_connector_status(evse_index: usize, connector_index: usize, value: &'static str) {

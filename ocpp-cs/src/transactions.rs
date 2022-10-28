@@ -1,11 +1,9 @@
-use std::{sync::Mutex, collections::HashMap};
+use std::{collections::HashMap, sync::Mutex};
 
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 
-lazy_static! {
-    // Saved transactions. transaction id => stringified transaction.
-    static ref TRANSACTIONS: Mutex<HashMap<String, String>> = Mutex::new(HashMap::new());
-}
+static TRANSACTIONS: Lazy<Mutex<HashMap<String, String>>> =
+    Lazy::new(|| Mutex::new(HashMap::new()));
 
 pub fn set_transaction(key: String, value: String) {
     TRANSACTIONS.lock().unwrap().insert(key, value);

@@ -1,9 +1,12 @@
 use std::{collections::HashMap, sync::Mutex};
 
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 use queues::*;
 
-
+use super::{
+    enums::{Action, Payload},
+    rpc::Call,
+};
 
 // Basic information about sent message.
 #[derive(Clone, Debug)]
@@ -12,44 +15,52 @@ pub struct SentMessage {
     pub timestamp: Option<u64>,
 }
 
-lazy_static! {
-    // Sent OCPP messages hash map: message id => stringified message.
-    static ref MESSAGES: Mutex<HashMap<String, String>> = Mutex::new(HashMap::new());
-    
-    // Pending messages queue.
-    static ref QUEUE: Mutex<Queue<String>> = Mutex::new(queue![]);
-    // Last sent message.
-    static ref LAST_SENT_MESSAGE: Mutex<SentMessage> = Mutex::new(SentMessage { id: None, timestamp: None });
+#[derive(Clone)]
+pub struct ActionPayload {
+    pub action: Action,
+    pub payload: Payload,
 }
 
-pub fn set_message(key: String, value: String) {
+// Sent OCPP messages hash map: message id => stringified message.
+static MESSAGES: Lazy<Mutex<HashMap<String, ActionPayload>>> =
+    Lazy::new(|| Mutex::new(HashMap::new()));
+
+// Pending messages queue.
+static QUEUE: Lazy<Mutex<Queue<Call>>> = Lazy::new(|| Mutex::new(queue![]));
+// Last sent message.
+static LAST_SENT_MESSAGE: Lazy<Mutex<SentMessage>> = Lazy::new(|| {
+    Mutex::new(SentMessage {
+        id: None,
+        timestamp: None,
+    })
+});
+
+pub fn set_message(key: String, value: ActionPayload) {
     MESSAGES.lock().unwrap().insert(key, value);
 }
 
-pub fn get_message(key: &str) -> String {
+pub fn get_message(key: &str) -> Option<ActionPayload> {
     match MESSAGES.lock().unwrap().get(key) {
-        Some(value) => value.to_string(),
-        None => String::from(""),
+        Some(value) => Some(value.clone()),
+        None => None,
     }
 }
-
-
 
 pub fn queue_size() -> usize {
     QUEUE.lock().unwrap().size()
 }
 
-pub fn queue_add(s: String) {
+pub fn queue_add(s: Call) {
     match QUEUE.lock().unwrap().add(s) {
         Err(e) => println!("{:?}", e),
         _ => (),
     };
 }
 
-pub fn queue_pop() -> String {
+pub fn queue_pop() -> Option<Call> {
     match QUEUE.lock().unwrap().remove() {
-        Ok(res) => res,
-        Err(_) => String::from(""),
+        Ok(res) => Some(res),
+        Err(_) => None,
     }
 }
 
