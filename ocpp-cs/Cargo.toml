@@ -10,12 +10,11 @@ dotenv = "0.15.0"
 ocpp-json = { path = "../ocpp-json" }
 ocpp-rpc = { path = "../ocpp-rpc" }
 url = "2.2"
-rust-ocpp = "0.2.0"
 serde_json = "1"
 uuid = { version = "1", features = ["v4", "fast-rng", "macro-diagnostics"] }
 serde = { version = "1", features = ["derive"] }
 chrono = "0.4"
-clap = { version = "3.2.20", features = ["derive"] }
+clap = { version = "3.1.18", features = ["derive"] }
 lazy_static = "1.4.0"
 mio-extras = "2.0"
 

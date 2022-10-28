@@ -1,5 +1,13 @@
+use ocpp_json::v2_0_1::{
+    data_types::ChargingStationType, enums::BootReasonEnumType, payloads::BootNotificationRequest,
+};
+use ocpp_rpc::ocpp2_0_1::json::{
+    enums::{Action, Payload},
+    queue,
+    rpc::Call,
+};
 use std::env;
-
+use uuid::Uuid;
 use ws::{util::Token, Handler, Request, Sender};
 
 macro_rules! block {
@@ -23,6 +31,8 @@ const QUEUE_MESSAGE_EXPIREATION: u64 = 10;
 pub struct Client {
     pub out: Sender,
 }
+
+impl Client {}
 
 impl Handler for Client {
     fn build_request(&mut self, url: &url::Url) -> ws::Result<ws::Request> {
@@ -55,6 +65,30 @@ impl Handler for Client {
             }
             _ => "VendorName".to_string(),
         };
+
+        let serial_number: Option<String> = match env::var("SERIAL_NUMBER") {
+            Ok(data) => Some(data),
+            _ => None,
+        };
+
+        // send BootNotification first
+        let msg_id = Uuid::new_v4().to_string();
+        let payload = BootNotificationRequest {
+            charging_station: ChargingStationType {
+                serial_number,
+                model,
+                vendor_name,
+                firmware_version: None,
+                modem: None,
+            },
+            reason: BootReasonEnumType::PowerUp,
+        };
+        // todo remove clone
+        let call = Call::new(msg_id.clone(), Action::BootNotification, payload.into());
+        let msg = serde_json::to_string(&call).expect("serialize boot notification to json");
+
+        queue::set_message(msg_id, msg.to_owned());
+        queue::queue_add(msg);
 
         Ok(())
     }

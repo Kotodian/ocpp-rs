@@ -253,7 +253,7 @@ pub struct ChargingStationType {
     pub firmware_version: Option<String>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub modm: Option<ModemType>,
+    pub modem: Option<ModemType>,
 }
 
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone, PartialEq)]
