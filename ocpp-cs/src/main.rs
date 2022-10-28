@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, time::Duration};
 
 use ws::connect;
 
@@ -30,11 +30,17 @@ fn main() {
         station_id,
     };
 
-    // todo log
-
+    let exponential_back_off = backoff::ExponentialBackoffBuilder::default()
+        .with_initial_interval(Duration::new(30, 0))
+        .with_randomization_factor(0.5)
+        .with_max_interval(Duration::new(5 * 60, 0))
+        .build();
     let mut connection_string: String = config.csms_url.to_owned();
     connection_string.push_str("/");
     connection_string.push_str(&config.station_id);
+    let connection_string = connection_string.as_str();
 
-    connect(connection_string, |out| client::Client { out: out }).unwrap()
+    let _ = backoff::retry(exponential_back_off, || {
+        connect(connection_string, |out| client::Client { out }).map_err(backoff::Error::transient)
+    });
 }
