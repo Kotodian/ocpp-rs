@@ -1,5 +1,5 @@
-pub mod ocpp2_0_1;
-use ocpp2_0_1::json::enums::Payload;
+pub mod json;
+use json::enums::Payload;
 
 #[macro_export]
 macro_rules! feature {

@@ -4,7 +4,7 @@ use ocpp_json::v2_0_1::{
     enums::{BootReasonEnumType, ConnectorStatusEnumType},
     payloads::{BootNotificationRequest, BootNotificationResponse, HeartbeatRequest},
 };
-use ocpp_rpc::ocpp2_0_1::json::{
+use ocpp_rpc::json::{
     enums::{Action, MessageType, Payload},
     queue::{
         self, get_last_sent_message, queue_add, queue_pop, queue_size, set_last_sent_message,
@@ -122,10 +122,6 @@ impl Handler for Client {
                     match msg.action {
                         Action::Authorize => todo!(),
                         Action::BootNotification => {
-                            // let request: BootNotificationRequest = msg
-                            //     .payload
-                            //     .try_into()
-                            //     .expect("expect boot notification request");
                             let payload: BootNotificationResponse = serde_json::from_value(payload)
                                 .expect("expect boot notification response");
                             // todo status notification
